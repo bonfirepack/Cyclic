@@ -24,6 +24,7 @@
 package com.lothrazar.cyclicmagic.net;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
@@ -84,6 +85,7 @@ public class PacketTileSetField implements IMessage, IMessageHandler<PacketTileS
 
   @Override
   public IMessage onMessage(PacketTileSetField message, MessageContext ctx) {
+    Minecraft.getMinecraft().addScheduledTask(() -> {
     EntityPlayerMP player = ctx.getServerHandler().player;
     try {
       TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
@@ -96,6 +98,7 @@ public class PacketTileSetField implements IMessage, IMessageHandler<PacketTileS
     catch (Exception e) {//since we dont know which class exactly this might get run on
       e.printStackTrace();
     }
+    });
     return null;
   }
 }
