@@ -23,6 +23,7 @@
  ******************************************************************************/
 package com.lothrazar.cyclicmagic.net;
 
+import com.lothrazar.cyclicmagic.ModCyclic;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -85,7 +86,7 @@ public class PacketTileSetField implements IMessage, IMessageHandler<PacketTileS
 
   @Override
   public IMessage onMessage(PacketTileSetField message, MessageContext ctx) {
-    Minecraft.getMinecraft().addScheduledTask(() -> {
+    ModCyclic.proxy.getThreadFromContext(ctx).addScheduledTask(() -> {
     EntityPlayerMP player = ctx.getServerHandler().player;
     try {
       TileEntity tile = player.getEntityWorld().getTileEntity(message.pos);
