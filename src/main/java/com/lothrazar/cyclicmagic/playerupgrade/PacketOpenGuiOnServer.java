@@ -56,10 +56,12 @@ public class PacketOpenGuiOnServer implements IMessage, IMessageHandler<PacketOp
 
   @Override
   public IMessage onMessage(PacketOpenGuiOnServer message, MessageContext ctx) {
+    ModCyclic.proxy.getThreadFromContext(ctx).addScheduledTask(() -> {
     ctx.getServerHandler().player.openGui(ModCyclic.instance, message.guiId, ctx.getServerHandler().player.getEntityWorld(),
         (int) ctx.getServerHandler().player.posX,
         (int) ctx.getServerHandler().player.posY,
         (int) ctx.getServerHandler().player.posZ);
+    });
     return null;
   }
 }
